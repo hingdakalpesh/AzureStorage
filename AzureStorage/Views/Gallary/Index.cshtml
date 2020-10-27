@@ -1,0 +1,56 @@
+﻿@model List<Uri>
+@{
+    ViewData["Title"] = "Home";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h2>Your Gallary</h2>
+}
+else
+{
+    <h2>Public Gallary</h2>
+}
+
+@if (Model.Any())
+{
+    <form asp-action="Delete">
+        <div class="row">
+            @foreach (var image in Model)
+            {
+                <div class="col-md-4 col-sm-12 my-3" id="@image">
+                    <div class="card">
+                        <img src=@image class="card-img-top" alt="image">
+
+                        <div class="card-footer">
+                            @*<a class="btn btn-success btn-sm" href="#" id="downloadLink" onclick="download()">
+                                    <i class="fas fa-cloud-download-alt"></i>
+                                    <div class="d-none d-md-inline">&nbsp;Download</div>
+                                </a>*@
+                            <div class="btn-group d-flex flex-fill">
+                                <a class="btn btn-primary" href=@image target="_blank">
+                                    <i class="fas fa-search-plus"></i>
+                                    <div class="d-none d-md-inline">&nbsp;View</div>
+                                </a>
+                                <button class="btn btn-danger" type="submit" asp-action="Delete" asp-route-blobUri="@image" onclick="return confirm('Are you sure you want to delete?')">
+                                    <i class="fas fa-trash"></i>
+                                    <div class="d-none d-md-inline">&nbsp;Delete</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </form>
+}
+else
+{
+    <p>No photos found. Please upload some.</p>
+}
+@section Scripts
+{
+    <script>
+
+    </script>
+}

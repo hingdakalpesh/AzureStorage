@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Upload";
+    Layout = "_LayoutNoSearchUpload";
+}
+
+
+<form enctype="multipart/form-data" class="mt-5" method="post" asp-action="Upload">
+    <div class="input-group">
+        <div class="custom-file">
+            <input type="file" name="images" class="custom-file-input" id="inputGroupFile" aria-describedby="inputGroupFileAddon" onchange="DisplayFilesToUpload()" multiple />
+            <label class="custom-file-label" for="inputGroupFile">Select some photos</label>
+        </div>
+        <div class="input-group-append">
+            <button class="btn btn-outline-info" type="submit" id="inputGroupFileAddon">Upload</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        //$(".custom-file-input").on("change", function () {
+        //    var fileName = $(this).val().split("\\").pop();
+        //    console.log(fileName);
+        //    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        //})
+
+        function DisplayFilesToUpload() {
+            var element = document.getElementById("inputGroupFile");
+            var html = "No files selected. Please click browse to select files.";
+
+            if (element.files.length > 1) {
+                console.log('More than 1 files uploaded');
+                html = element.files.length + " files selected";
+            }
+            if (element.files.length == 1) {
+                console.log('single file uploaded');
+                html = element.files[0].name + " selected";
+            }
+
+            $(".custom-file-label").html(html);
+            //for (var i = 0; i < element.files.length; i++) {
+            //    html += "<strong>" + (i + 1) + "</strong>. File: ";
+            //    var file = element.files[i];
+            //    if ('name' in file) { html += file.name + " ("; }
+            //    if ('size' in file) { html += "size: " + file.size + " bytes)<br>"; }
+            //}
+
+            //html += "<div class='fileUpload btn btn-default'><span>Upload</span><input type='submit' class='upload' value='Upload'/></div>"
+            //document.getElementById("FilesToUpload").innerHTML = html;
+        }
+    </script>
+}
